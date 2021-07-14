@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="shortcut icon" href="../static/images/favicon.ico" th:href="@{/images/favicon.ico}">
+    <title th:replace="${title}">码农博客 - 博客详情</title>
+
+</head>
+<body>
+    <!-- 导航部分 -->
+    <nav th:fragment="menu(index)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <a  href="index.html" th:href="@{/}"><h3 class="ui header item logo"><img src="../static/images/logo.png" th:src="@{/images/logo.png}" alt=""></h3></a>
+                <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${index == 1} ? 'active'"><i class="home icon"></i>首页</a>
+                <a href="#" th:href="@{/types}" class="m-item item m-mobile-hide" th:classappend="${index == 2} ? 'active'"><i class="idea icon"></i>分类</a>
+                <a href="#" th:href="@{/tags}" class="m-item item m-mobile-hide"
+                   th:classappend="${index == 3} ? 'active'"><i class="tags icon"></i>标签</a>
+                <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide" th:classappend="${index == 4} ? 'active'"><i class="clone icon"></i>归档</a>
+                <a href="#" th:href="@{/games}" class="m-item item m-mobile-hide" th:classappend="${index == 5} ? 'active'"><i class="game icon"></i>娱乐小游戏</a>
+                <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${index == 6} ? 'active'"><i class="info icon"></i>关于我</a>
+                <a href="#" th:href="@{/admin}" class="m-item item m-mobile-hide" th:classappend="${index == 7} ? 'active'"><i class="cogs icon"></i>博客管理</a>
+                <div class="right m-item  item m-mobile-hide">
+                    <form name="search" action="#" th:action="@{/search}" target="_blank" method="post">
+                        <div class="ui icon inverted transparent input m-margin-tb-tiny">
+                            <input type="text" name="query" placeholder="搜索..." th:value="${query}">
+                            <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                    <div id="newblog-container">
+                        <div class="ui inverted link list" th:fragment="newblogList">
+                            <a href="#" th:href="@{/blogDetail/{uuid}(uuid=${blog.uuid})}" target="_blank" class="item"
+                               th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事（User Story）</a>
+                            <!--/*-->
+                            <a href="#" class="item">用户故事（User Story）</a>
+                            <a href="#" class="item">用户故事（User Story）</a>
+                            <!--*/-->
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                    <div class="ui inverted link list">
+                        <p class="m-text-thin m-opacity-tiny ">Email：939763776@qq.com</p>
+                        <p class="m-text-thin m-opacity-tiny ">QQ：939763776</p>
+                        <p class="m-text-thin m-opacity-tiny ">微信：森有暖树</p>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">Blog</h4>
+                    <p class="m-text-thin m-opacity-tiny m-text-spaced">这是我的个人博客，会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <div class="m-text-lined m-text-thin m-opacity-mini m-text-spaced" id="elapseClock"></div>
+            <p class="m-text-thin m-opacity-mini m-text-spaced">&copy; 2020-2021 程序猿孙逗比 - <i class="coffee icon" style="margin: 0 5px"></i>孙飞 版权所有 | 网站备案号：
+                <a href="http://beian.miit.gov.cn" target="_blank">蜀ICP备20008733号-1</a></p>
+            <div></div>
+        </div>
+    </footer>
+    <th:block th:fragment="script">
+        <script src="../static/js/phaser.min.js" th:src="@{/js/phaser.min.js}"></script>
+        <script src="../static/js/catch-the-cat.js" th:src="@{/js/catch-the-cat.js}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+        <script src="../static/js/line.js" th:src="@{/js/line.js}"></script>
+        <script src="../static/js/index.js" th:src="@{/js/index.js}"></script>
+        <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+        <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+        <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+        <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+        <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+        <script>
+            $("#newblog-container").load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+            var together = new Date();
+            together.setFullYear(2020,0o1,0o1);
+            together.setHours(0);
+            together.setMinutes(0);
+            together.setSeconds(0);
+            together.setMilliseconds(0);
+            timeElapse(together);
+            setInterval(function () {
+                timeElapse(together);
+            }, 500);
+        </script>
+    </th:block>
+</body>
+</html>
